@@ -1,16 +1,25 @@
 import { NgModule } from '@angular/core';
-import { NgxInteractableElementComponent } from './ngx-interactable-element.component';
-
-
+import { NgxDragHandleDirective } from './drag/drag-handle.directive';
+import { NgxDragDirective } from './drag/drag.directive';
+import { NgxResizeHandleDirective } from './resize/resize-handle.directive';
+import { NgxResizeDirective } from './resize/resize.directive';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [
-    NgxInteractableElementComponent
-  ],
   imports: [
+    SharedModule
+  ],
+  declarations: [
+    NgxDragDirective,
+    NgxDragHandleDirective,
+    NgxResizeDirective,
+    NgxResizeHandleDirective
   ],
   exports: [
-    NgxInteractableElementComponent
+    NgxDragDirective, 
+    NgxDragHandleDirective, 
+    NgxResizeDirective, 
+    NgxResizeHandleDirective
   ]
 })
 export class NgxInteractableElementModule { }
