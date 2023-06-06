@@ -1,5 +1,5 @@
-import {Directive} from '@angular/core';
-import {Boundary} from './boundary';
+import { Directive } from '@angular/core';
+import { Boundary } from './boundary';
 
 /**
  * The directive is used to work with boundary area for HTML element
@@ -20,7 +20,9 @@ export class BoundaryDirective {
    */
   protected boundary: string | HTMLElement | Window | null = null;
 
-  constructor(private readonly windowObject?: Window, private readonly documentObject?: Document) {}
+  protected scale: number = 1;
+
+  constructor(private readonly windowObject?: Window, private readonly documentObject?: Document) { }
 
   /**
    * Get boundary position based on {@link boundary}
@@ -30,13 +32,23 @@ export class BoundaryDirective {
 
     const boundaryElement = this.resolveBoundaryElement();
 
-    if (boundaryElement instanceof Element) {
+    if (boundaryElement instanceof HTMLElement) {
       const boundaryElementRect = boundaryElement.getBoundingClientRect();
+
+      // console.log("[BoundaryDirective] getBoundary offset", boundaryElement.offsetTop, boundaryElement.offsetLeft, boundaryElement.offsetWidth, boundaryElement.offsetHeight)
+      // console.log("[BoundaryDirective] getBoundary rect", boundaryElement.clientWidth, boundaryElementRect.width)
 
       rect.left = boundaryElementRect.left;
       rect.top = boundaryElementRect.top;
       rect.bottom = boundaryElementRect.bottom;
       rect.right = boundaryElementRect.right;
+      
+      this.scale = boundaryElementRect.width / boundaryElement.clientWidth
+
+      // rect.left = boundaryElement.offsetLeft; // boundaryElementRect.left;
+      // rect.top = boundaryElement.offsetTop; //boundaryElementRect.top;
+      // rect.bottom =  boundaryElement.offsetTop + boundaryElement.offsetHeight; // boundaryElementRect.bottom;
+      // rect.right = boundaryElement.offsetLeft + boundaryElement.offsetWidth; //  boundaryElementRect.right;
 
       return rect;
     }
@@ -84,11 +96,11 @@ export class BoundaryDirective {
 
     switch (position) {
       case 'left':
-        return value - boundary.left;
+        return (value - boundary.left) / this.scale;
       case 'top':
-        return value - boundary.top;
+        return (value - boundary.top) / this.scale;
     }
 
-    return value;
+    return value / this.scale;
   }
 }

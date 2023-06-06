@@ -137,13 +137,11 @@ export class NgxDragDirective extends BoundaryDirective implements OnInit, OnDes
       .pipe(
         tap((event) => event.nativeEvent.preventDefault()),
         map<MovementBase, Movement>((event) => {
-          if (
-            !eventInitial ||
-            eventInitial.x !== event.initial.x ||
-            eventInitial.y !== event.initial.y
-          ) {
+          if (!eventInitial || eventInitial.x !== event.initial.x || eventInitial.y !== event.initial.y) {
             eventInitial = event.initial;
             hostElementRect = this.elementRef.nativeElement.getBoundingClientRect();
+
+            // console.log("[DragDirective] observe eventInitial", eventInitial, hostElementRect)
 
             if (!this.hostElementRectInitial) {
               this.updateInitialRect();
@@ -156,6 +154,8 @@ export class NgxDragDirective extends BoundaryDirective implements OnInit, OnDes
             bottom: hostElementRect.bottom - event.initial.y,
             right: hostElementRect.right - event.initial.x,
           } as Boundary;
+
+          // console.log("[NgxDragDirective] observe hostElementRect", hostElementRect)
 
           return {
             ...event,
@@ -198,10 +198,18 @@ export class NgxDragDirective extends BoundaryDirective implements OnInit, OnDes
     const hostElementRect = this.elementRef.nativeElement.getBoundingClientRect();
     const boundaryRect = this.getBoundary();
 
+    // console.log("[DragDirective] onDrag hostElementRect", hostElementRect)
+    // console.log("[DragDirective] onDrag boundaryRect", boundaryRect)
+
     let left = event.x - event.offsetFromHost.left;
     let top = event.y - event.offsetFromHost.top;
 
+    // console.log(`[DragDirective] onDrag ${event.x.toFixed(2)} - ${event.offsetFromHost.left.toFixed(2)} = ${left.toFixed(2)}`)
+    // console.log(`[DragDirective] onDrag ${event.y} - ${event.offsetFromHost.top} = ${top}`)
+
     if (boundaryRect) {
+      // left = Math.max(boundaryRect.left, left);
+      // left = Math.min(boundaryRect.right, left);
       left = Math.max(boundaryRect.left, left);
       left = Math.min(
         boundaryRect.left + (boundaryRect.right - boundaryRect.left) - hostElementRect.width,
@@ -261,11 +269,11 @@ export class NgxDragDirective extends BoundaryDirective implements OnInit, OnDes
    */
   private emitDrag(nativeEvent?: Event): void {
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
-    const parentRect = this.elementRef.nativeElement.parentElement?.getBoundingClientRect();
+    // const parentRect = this.elementRef.nativeElement.parentElement?.getBoundingClientRect();
 
     this.ngxDragged.emit({
-      // nativeEvent,    
-      parentRect,
+      nativeEvent,
+      elementRef: this.elementRef,
       top: rect.top,
       right: rect.right,
       bottom: rect.bottom,

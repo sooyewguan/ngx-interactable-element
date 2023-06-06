@@ -83,7 +83,7 @@ export class DragService {
       x = event.clientX;
       y = event.clientY;
     }
-
+    
     return { x, y };
   }
 

@@ -820,11 +820,12 @@ export class NgxResizeDirective extends BoundaryDirective implements AfterViewIn
    */
   private emitResize(nativeEvent?: Event): void {
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
-    const parentRect = this.elementRef.nativeElement.parentElement?.getBoundingClientRect()
+    // const parentRect = this.elementRef.nativeElement.parentElement?.getBoundingClientRect()
 
     this.ngxResized.emit({
-      // nativeEvent,
-      parentRect,
+      nativeEvent,
+      // parentRect,
+      elementRef: this.elementRef,
       top: rect.top,
       right: rect.right,
       bottom: rect.bottom,

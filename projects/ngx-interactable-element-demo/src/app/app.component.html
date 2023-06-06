@@ -1,0 +1,54 @@
+<main>
+  <div style="display: flex;">
+    <section #dragarea class="area" (mousemove)="mousemove($event)">
+      <div class="rect offset-small move" ngxDrag ngxDragPositionStrategy="relative" [ngxDragBoundary]="dragarea"
+        ngxResize [ngxResizeMinWidth]="50" [ngxResizeMinHeight]="50" [ngxResizeBoundary]="dragarea"
+        (ngxDragged)="dragged($event)">
+        <div [ngxResizeHandle]="handleType.TopLeft" data-resize-handle='TopLeft'></div>
+        <div [ngxResizeHandle]="handleType.Top" data-resize-handle='Top'></div>
+        <div [ngxResizeHandle]="handleType.TopRight" data-resize-handle='TopRight'></div>
+        <div [ngxResizeHandle]="handleType.Right" data-resize-handle='Right'></div>
+        <div [ngxResizeHandle]="handleType.BottomRight" data-resize-handle='BottomRight'></div>
+        <div [ngxResizeHandle]="handleType.Bottom" data-resize-handle='Bottom'></div>
+        <div [ngxResizeHandle]="handleType.BottomLeft" data-resize-handle='BottomLeft'></div>
+        <div [ngxResizeHandle]="handleType.Left" data-resize-handle='Left'></div>
+      </div>
+    </section>
+    <section>
+      <div>
+        offsetWidth: {{ dragOffsetWidth }}
+      </div>
+      <pre>{{dragareaRect | json}}</pre>
+      <pre>{{ mousePosition | json }}</pre>
+    </section>
+
+  </div>
+  <hr>
+  <div style="display: flex;">
+    <section #zoomarea class="area zoom" (mousemove)="zoomdmove($event)">
+
+      <div class="rect offset-small move" ngxDrag ngxDragPositionStrategy="relative" [ngxDragBoundary]="zoomarea"
+        ngxResize [ngxResizeMinWidth]="50" [ngxResizeMinHeight]="50" [ngxResizeBoundary]="zoomarea"
+        (ngxDragged)="dragged($event)">
+        <div [ngxResizeHandle]="handleType.TopLeft" data-resize-handle='TopLeft'></div>
+        <div [ngxResizeHandle]="handleType.Top" data-resize-handle='Top'></div>
+        <div [ngxResizeHandle]="handleType.TopRight" data-resize-handle='TopRight'></div>
+        <div [ngxResizeHandle]="handleType.Right" data-resize-handle='Right'></div>
+        <div [ngxResizeHandle]="handleType.BottomRight" data-resize-handle='BottomRight'></div>
+        <div [ngxResizeHandle]="handleType.Bottom" data-resize-handle='Bottom'></div>
+        <div [ngxResizeHandle]="handleType.BottomLeft" data-resize-handle='BottomLeft'></div>
+        <div [ngxResizeHandle]="handleType.Left" data-resize-handle='Left'></div>
+      </div>
+    
+    </section>
+    <section>
+      <div>
+        offsetWidth: {{ zoomOffsetWidth }}
+      </div>
+      <pre>{{zoomareaRect | json}}</pre>
+      <pre>{{zoomdPosition | json }}</pre>
+    </section>
+
+  </div>
+
+</main>
