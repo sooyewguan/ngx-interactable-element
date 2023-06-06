@@ -1,6 +1,6 @@
 {
   "name": "@sooyewguan/ngx-interactable-element",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/sooyewguan/ngx-interactable-element.git"
@@ -9,11 +9,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@angular/common": "^15.2.2",
-    "@angular/core": "^15.2.2"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0"
+  }
 }
